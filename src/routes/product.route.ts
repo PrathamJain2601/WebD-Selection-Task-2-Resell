@@ -7,7 +7,7 @@ import { isAuthenticated } from "../middlewares/auth.middleware";
 
 const router = Router();
 
-router.get("/get-product",isAuthenticated, get_product);
+router.get("/get-product", get_product);
 router.post("/create-product",isAuthenticated, create_product);
 router.put("/edit-product",isAuthenticated, edit_product);
 router.delete("/remove-product",isAuthenticated, remove_product);

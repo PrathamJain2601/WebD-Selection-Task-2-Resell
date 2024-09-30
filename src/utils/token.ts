@@ -20,14 +20,17 @@ const create_token = async (res: Response, user: User) => {
 
 const verify_token = async (req: Request) => {
     const authenticatedToken = req.cookies.token;
+    console.log(authenticatedToken);
     if (authenticatedToken) {
         try {
             const decoded = await jwt.verify(authenticatedToken, process.env.JWT_SECRET);
+            console.log(decoded);
             const user = await prisma.user.findUnique({
                 where: {
                     id: decoded.userId,
                 },
             });
+            console.log(user);
             if (user) {
                 if(user.isVerified){
                     req.body.userId = decoded.userId;
