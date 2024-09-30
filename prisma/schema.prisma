@@ -22,4 +22,28 @@ model User {
   otp         String?   
   isOtpValid  DateTime? 
   isVerified  Boolean?  @default(false)
+  phone       String?   @unique
+  location    String?
+
+  transactions TransactionHistory[]
+  products Product[]
+}
+
+model TransactionHistory {
+  id          Int       @id @default(autoincrement())
+  amount      Float
+  date        DateTime  @default(now())
+  description String?
+  userId      Int
+  user        User      @relation(fields: [userId], references: [id])
+}
+
+model Product {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?
+  price       Float
+  quantity    Int
+  userId      Int
+  user        User      @relation(fields: [userId], references: [id])
 }
