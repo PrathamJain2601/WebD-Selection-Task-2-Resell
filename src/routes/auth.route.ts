@@ -6,12 +6,13 @@ import { verify_email_otp } from "../controllers/auth-controller/verify-email-ot
 import { send_forgot_password_otp } from "../controllers/auth-controller/send-forgot-password-otp.controller";
 import { verify_forgot_password_otp } from "../controllers/auth-controller/verify-forgot-password-otp.controller";
 import { send_email_otp } from "../controllers/auth-controller/send-email-otp.controller";
+import { isAuthenticated } from "../middlewares/auth.middleware";
 
 const router = Router();
 
 router.post("/register", register);
 router.post("/login", login);
-router.get("/logout", logout);
+router.get("/logout",isAuthenticated, logout);
 router.post("/send-email-otp", send_email_otp);
 router.post("/verify-email-otp", verify_email_otp);
 router.post("/send-forgot-password-otp", send_forgot_password_otp);

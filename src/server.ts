@@ -17,6 +17,8 @@ const auth = require("./routes/auth.route");
 app.use("/auth", auth);
 const product = require("./routes/product.route");
 app.use("/product", product);
+const profile = require("./routes/profile.route");
+app.use("/profile", profile);
 
 app.listen(5000, ()=>{
     console.log("server running on port 5000");
