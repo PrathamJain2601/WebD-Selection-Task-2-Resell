@@ -19,6 +19,8 @@ const product = require("./routes/product.route");
 app.use("/product", product);
 const profile = require("./routes/profile.route");
 app.use("/profile", profile);
+const cart = require("./routes/cart.route");
+app.use("/cart", cart);
 
 app.listen(5000, ()=>{
     console.log("server running on port 5000");

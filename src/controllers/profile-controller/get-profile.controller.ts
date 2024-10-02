@@ -33,6 +33,19 @@ export const get_profile = async (req: Request, res: Response) => {
             quantity: true,
           },
         },
+        cart: {  // Include items in the user's cart
+          select: {
+            product: {
+              select: {
+                id: true,
+                name: true,
+                description: true,
+                price: true,
+              },
+            },
+            quantity: true, // The quantity of the product in the cart
+          },
+        },
       },
     });
 
@@ -40,7 +53,7 @@ export const get_profile = async (req: Request, res: Response) => {
       return responseCodes.clientError.notFound(res, "User profile not found.");
     }
 
-    return responseCodes.success.ok(res, user, "Profile and products fetched successfully.");
+    return responseCodes.success.ok(res, user, "Profile fetched successfully.");
   } catch (error) {
     console.error(error);
     return responseCodes.serverError.internalServerError(res, "An error occurred while fetching the profile.");
