@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm run migrate:deploy && npx prisma migrate dev --name init && node dist/server.js",
+    "start": "npm run migrate:deploy && node dist/server.js",
     "build": "npm i && npx tsc -b",
     "migrate:deploy": "npx prisma migrate deploy"
   },
