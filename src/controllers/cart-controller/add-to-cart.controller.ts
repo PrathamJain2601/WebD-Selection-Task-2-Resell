@@ -34,15 +34,14 @@ export const add_to_cart = async (req: Request, res: Response) => {
     });
 
     if (cartProduct) {
-      const newQuantity = cartProduct.quantity + quantity;
 
-      if (newQuantity > product.quantity) {
+      if (quantity > product.quantity) {
         return responseCodes.clientError.badRequest(res, "Updated cart quantity exceeds available stock.");
       }
 
       const updatedCartProduct = await prisma.cartProduct.update({
         where: { id: cartProduct.id },
-        data: { quantity: newQuantity },
+        data: { quantity: quantity },
       });
 
       return responseCodes.success.ok(res, updatedCartProduct, "Cart updated successfully.");

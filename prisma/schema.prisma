@@ -1,12 +1,11 @@
-generator client {
-  provider = "prisma-client-js"
-}
+  generator client {
+    provider = "prisma-client-js"
+  }
 
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
+  datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+  }
 model User {
   id          Int                  @id @default(autoincrement())
   email       String               @unique
@@ -22,8 +21,7 @@ model User {
   transactions TransactionHistory[]
   products     Product[]
   favorites    Product[]           @relation("UserFavorites")
-  cart         CartProduct[]        
-
+  cart         CartProduct[]
 }
 
 model TransactionHistory {
@@ -33,6 +31,19 @@ model TransactionHistory {
   description String?
   userId      Int
   user        User      @relation(fields: [userId], references: [id])
+  items       TransactionItem[] // New relation to hold items in the transaction
+}
+
+model TransactionItem {
+  id              Int       @id @default(autoincrement())
+  transactionId   Int
+  productId       Int
+  quantity        Int
+
+  transaction     TransactionHistory @relation(fields: [transactionId], references: [id])
+  product         Product            @relation(fields: [productId], references: [id])
+
+  @@unique([transactionId, productId]) // Ensure each product appears only once per transaction
 }
 
 model Product {
@@ -45,6 +56,7 @@ model Product {
   user        User      @relation(fields: [userId], references: [id])
   favoritedBy User[]    @relation("UserFavorites")
   cartItems    CartProduct[]
+  transactionItems TransactionItem[] // Add this line to establish the opposite relation
 }
 
 model CartProduct {
